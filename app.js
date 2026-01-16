@@ -1558,3 +1558,54 @@ document.addEventListener('change',e=>{
   if(e.target.classList.contains('outcome')) updateCounters();
 });
 updateCounters();
+/* ================================
+   SAFE OVERRIDES — DO NOT REMOVE
+   Fixes:
+   - Tracker stats removal
+   - Main table not rendering
+   ================================ */
+
+// 1) Disable legacy tracker stats function if it exists
+if (typeof trackerStats === "function") {
+  trackerStats = function () {
+    return {
+      total: 0,
+      won: 0,
+      lost: 0,
+      pending: 0,
+      voided: 0,
+      winp: 0
+    };
+  };
+}
+
+// 2) Prevent any legacy tracker stats renderer from running
+[
+  "renderTrackerStats",
+  "updateTrackerStats",
+  "drawTrackerStats"
+].forEach(fn => {
+  if (typeof window[fn] === "function") {
+    window[fn] = function () {};
+  }
+});
+
+// 3) GUARANTEE main table renders (prevents blank dashboard)
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    if (typeof render === "function") {
+      render();
+    } else if (typeof applyFilters === "function") {
+      applyFilters();
+    }
+  } catch (e) {
+    console.warn("Render fallback used:", e);
+  }
+});
+
+// 4) FINAL SAFETY: remove ONLY tracker stats UI if injected
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".trackerStats, .trackerHeader").forEach(el => {
+    el.remove();
+  });
+});
