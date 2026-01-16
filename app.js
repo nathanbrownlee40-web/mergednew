@@ -78,3 +78,77 @@ document.addEventListener("DOMContentLoaded", () => {
   loadData();
   applyFilters();
 });
+/* =========================
+   TOP DAILY TIPS – CLEAN
+   No tracker, no stats
+   ========================= */
+
+const state = {
+  data: [],
+  filtered: []
+};
+
+/* ---- SAMPLE DATA (SAFE DEFAULT) ---- */
+function loadData() {
+  state.data = [
+    {
+      date: "2026-01-16",
+      league: "Eredivisie",
+      home: "PSV",
+      away: "Excelsior",
+      pick: "Over 2.5",
+      odds: 2.00,
+      probability: 72
+    },
+    {
+      date: "2026-01-16",
+      league: "Premier League",
+      home: "Arsenal",
+      away: "Brighton",
+      pick: "BTTS Yes",
+      odds: 1.85,
+      probability: 68
+    }
+  ];
+
+  state.filtered = [...state.data];
+}
+
+/* ---- RENDER TABLE ---- */
+function renderTable() {
+  const tbody = document.querySelector("#tbl tbody");
+  const thead = document.querySelector("#tbl thead");
+
+  thead.innerHTML = `
+    <tr>
+      <th>Date</th>
+      <th>League</th>
+      <th>Match</th>
+      <th>Pick</th>
+      <th>Odds</th>
+      <th>Probability</th>
+    </tr>
+  `;
+
+  tbody.innerHTML = "";
+
+  if (state.filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center;opacity:.6">
+          No tips available
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  state.filtered.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.date}</td>
+      <td>${r.league}</td>
+      <td>${r.home} vs ${r.away}</td>
+      <td>${r.pick}</td>
+      <td>${r.odds.toFixed(2)}</td>
+      <td>${r.pro
