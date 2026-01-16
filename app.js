@@ -464,14 +464,15 @@ function trackerFinance(){
 }
 
 function trackerStats(){
-  const arr = state.tracker || [];
-  const won = arr.filter(x=>x.status==="won").length;
-  const lost = arr.filter(x=>x.status==="lost").length;
-  const pending = arr.filter(x=>x.status==="pending").length;
-  const voided = arr.filter(x=>x.status==="void").length;
-  const decided = won + lost;
-  const winp = decided ? Math.round((won/decided)*100) : 0;
-  return {total: arr.length, won, lost, pending, voided, winp};
+function trackerStats(){
+  return {
+    total: 0,
+    won: 0,
+    lost: 0,
+    pending: 0,
+    voided: 0,
+    winp: 0
+  };
 }
 
 
