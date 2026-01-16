@@ -1609,3 +1609,31 @@ document.addEventListener("DOMContentLoaded", () => {
     el.remove();
   });
 });
+/* ================================
+   CLEAN FIX – DO NOT EDIT
+   ================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  // 1️⃣ Restore rendering (this is what broke)
+  try {
+    if (typeof applyFilters === "function") applyFilters();
+    if (typeof render === "function") render();
+    if (typeof renderTable === "function") renderTable();
+  } catch (e) {
+    console.warn("Render bootstrap warning:", e);
+  }
+
+  // 2️⃣ SAFELY remove ONLY the old tracker stats section (by text match)
+  const sections = document.querySelectorAll("section, div");
+  sections.forEach(el => {
+    const t = (el.textContent || "").trim();
+    if (
+      t.startsWith("Pending") &&
+      t.includes("Won") &&
+      t.includes("Lost") &&
+      t.includes("Void")
+    ) {
+      el.remove();
+    }
+  });
+});
