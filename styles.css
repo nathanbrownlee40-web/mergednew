@@ -1,0 +1,718 @@
+:root{
+  --bg:#0b1020;
+  --card:#111827;
+  --muted:#9ca3af;
+  --text:#e5e7eb;
+  --accent:#22c55e;
+  --border: rgba(255,255,255,.10);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 18px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  width:100%;
+  overflow-x:hidden;
+  /* stop mobile browsers from auto-resizing text and breaking alignment */
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  margin:0;
+  font-family: var(--sans);
+  background: radial-gradient(1200px 600px at 20% 0%, #13224a 0%, rgba(19,34,74,0) 60%),
+              radial-gradient(900px 500px at 90% 10%, #1b3a2e 0%, rgba(27,58,46,0) 55%),
+              var(--bg);
+  color: var(--text);
+}
+.topbar{
+  position: sticky; top: 0; z-index: 5;
+  background: rgba(11,16,32,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  width:100%;
+  padding: 16px calc(18px + env(safe-area-inset-right)) 16px calc(18px + env(safe-area-inset-left));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.title{min-width:0}
+.actions{min-width:0}
+.title h1{margin:0; font-size: 18px; letter-spacing:.2px}
+.subtitle{margin:3px 0 0; color:var(--muted); font-size: 12px}
+.actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+.container{
+  max-width: 1100px;
+  margin: 18px auto 40px;
+  width:100%;
+  padding: 0 calc(12px + env(safe-area-inset-right)) 0 calc(12px + env(safe-area-inset-left));
+  display:grid;
+  gap:14px;
+}
+.card{
+  background: rgba(17,24,39,.88);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 100%;
+  overflow: hidden;
+}
+.controls{
+  padding: 12px;
+  display:grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (max-width: 980px){
+  .controls{grid-template-columns: repeat(2, minmax(0, 1fr));}
+}
+.control label{display:block; font-size:12px; color:var(--muted); margin: 0 0 6px}
+.control input,.control select{
+  width:100%;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  padding: 10px 12px;
+  outline:none;
+}
+.control input:focus,.control select:focus{border-color: rgba(34,197,94,.55); box-shadow: 0 0 0 3px rgba(34,197,94,.18)}
+.span-2{grid-column: span 2}
+.btn{
+  border-radius: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background: rgba(34,197,94,.16);
+  color: var(--text);
+  cursor:pointer;
+  font-weight: 700;
+}
+.btn:hover{filter: brightness(1.08)}
+.btn-ghost{background: rgba(0,0,0,.20)}
+.hidden{display:none !important}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.tab{
+  border-radius: 999px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: var(--text);
+  font-weight: 800;
+  font-size: 12px;
+  cursor:pointer;
+}
+.tab[aria-selected="true"]{
+  border-color: rgba(34,197,94,.55);
+  background: rgba(34,197,94,.14);
+}
+
+.tableWrap{padding: 10px 10px 6px}
+.tableMeta{
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 4px 4px 10px;
+  gap:10px;
+}
+.small{color:var(--muted); font-size:12px}
+
+.tableScroll{overflow:auto; border-top: 1px solid var(--border); border-radius: 14px}
+table{width:100%; border-collapse: collapse; min-width: 900px}
+thead th{
+  position: sticky; top: 0;
+  background: rgba(17,24,39,.96);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 10px;
+  text-align:left;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+tbody td{
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 13px;
+}
+tbody tr:hover{background: rgba(255,255,255,.05)}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  border: 1px solid rgba(34,197,94,.45);
+  background: rgba(34,197,94,.12);
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 12px;
+}
+.mono{font-family: var(--mono)}
+
+/* Compact (mobile) card list */
+.cardList{display:none; padding: 10px}
+body.compact .tableScroll{display:none}
+body.compact .cardList{display:block}
+
+.cardItem{
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.18);
+  border-radius: 16px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.cardTop{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.cardTitle{font-weight: 950; font-size: 14px}
+.cardSub{color: var(--muted); font-size: 12px; margin-top: 2px}
+.cardGrid{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 10px; margin-top: 10px}
+.cardGrid .k{font-size: 11px; color: var(--muted)}
+.cardGrid .v{font-size: 13px}
+
+.dialog{
+  width: min(920px, calc(100vw - 24px));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0;
+  background: rgba(17,24,39,.96);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.dialog::backdrop{background: rgba(0,0,0,.65)}
+.dialogHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.dialogTitle{font-size: 18px; font-weight: 950}
+.dialogSub{color: var(--muted); font-size: 12px; margin-top:4px}
+.dialogBody{padding: 14px}
+.kv{
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  gap: 10px 12px;
+}
+@media (max-width: 640px){
+  .kv{grid-template-columns: 1fr; gap: 6px}
+}
+
+@media (max-width: 640px){
+  body.trackerView .tsMetric span{ font-size: 11px; }
+  body.trackerView .tsMetric b{ font-size: 13px; }
+  body.trackerView .tsTable td{ padding: 6px 8px; font-size: 12px; }
+}
+.k{color: var(--muted); font-size:12px}
+.v{font-size: 14px}
+
+/* Probability color scale */
+.badge.prob-low{
+  border-color: rgba(245,158,11,.7);
+  background: rgba(245,158,11,.18);
+}
+.badge.prob-mid{
+  border-color: rgba(34,197,94,.6);
+  background: rgba(34,197,94,.18);
+}
+.badge.prob-high{
+  border-color: rgba(34,197,94,.9);
+  background: rgba(34,197,94,.32);
+  box-shadow: 0 0 0 2px rgba(34,197,94,.15) inset;
+}
+
+.badge.avoid{
+  border-color:#ef4444;
+  background:rgba(239,68,68,.25);
+  color:#fecaca;
+}
+
+
+/* Tracker */
+.trackAdd{
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: inherit;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 1;
+  margin-right: 8px;
+}
+.trackAdd:active{ transform: scale(.98); }
+
+.trackSectionTitle{
+  margin: 14px 2px 6px;
+  font-weight: 800;
+  opacity: .92;
+}
+.trackEmpty{
+  opacity: .75;
+  padding: 10px 6px 14px;
+  font-size: 13px;
+}
+
+.trackActions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.trackBtn{
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+  color: inherit;
+  border-radius: 12px;
+  padding: 6px 9px;
+  font-size: 14px;
+  line-height: 1;
+}
+.trackBtn:active{ transform: scale(.98); }
+
+body.trackerView #filters,
+body.trackerView #tableWrap{
+  display:none !important;
+}
+
+body.trackerView .control:not(.span-2){ display:none !important; }
+body.trackerView #tableWrap{ display:none !important; }
+
+
+/* Tracker+ */
+.trackerHeader{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.trackerStats{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+
+/* Tracker stats (mobile + desktop) */
+.tsSummary{ display:grid; gap:6px; }
+.tsMetric{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+  line-height:1.15;
+  padding: 2px 0;
+}
+.tsMetric span{ font-size: 12px; opacity: .75; }
+.tsMetric b{ font-size: 14px; letter-spacing: .2px; }
+
+.tsTable{
+  width:100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: fixed;
+}
+.tsTable td{
+  padding: 8px 10px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: 13px;
+}
+.tsTable td:nth-child(2),
+.tsTable td:nth-child(4){
+  text-align:right;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.tsTable td:nth-child(1),
+.tsTable td:nth-child(3){
+  opacity:.85;
+  white-space: nowrap;
+}
+.tsRow{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap: 8px;
+  font-size: 13px;
+  opacity: .95;
+}
+.tsRow b{ font-size: 15px; }
+
+/* Tracker summary: small sub-metric under Win rate */
+.tsSubMetric{
+  margin-top:6px;
+  font-size:11px;
+  opacity:.85;
+}
+.tsSubMetric b{ font-size:12px; }
+
+.trackerBankroll{
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.tbLabel{ font-size: 12px; opacity: .85; display:block; margin-bottom:6px; }
+.tbRow{ display:flex; gap:8px; align-items:center; }
+.tbInput{
+  flex:1;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: inherit;
+}
+.tbBtn{
+  padding: 10px 12px;
+  border-radius: 14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: inherit;
+  font-weight: 700;
+}
+.tbBtn.danger{
+  margin-top: 10px;
+  background: rgba(255,0,0,.12);
+  border-color: rgba(255,0,0,.25);
+}
+.tbHint{ margin-top:8px; opacity:.9; font-size: 13px; }
+
+.trackerChart{
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.tcTitle{ font-weight: 800; margin-bottom: 8px; opacity:.95; }
+
+.stakeOdds{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.stakeOdds label{
+  font-size: 11px;
+  opacity: .85;
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+.soIn{
+  width: 70px;
+  padding: 6px 8px;
+  border-radius: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: inherit;
+}
+@media (min-width: 520px){
+  .trackerHeader{ grid-template-columns: 1fr 1fr; }
+  .trackerChart{ grid-column: 1 / -1; }
+}
+
+@media (max-width: 420px){
+  .tsMetric span{ font-size: 11px; }
+  .tsMetric b{ font-size: 13px; }
+  .tsTable td{ padding: 7px 8px; font-size: 12px; }
+}
+
+.trackerFilters{
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.tfRow{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.tfSel{
+  flex:1;
+  min-width: 140px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: inherit;
+}
+.tfQ{
+  flex:2;
+  min-width: 180px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: inherit;
+}
+.trackBtn.copy{ }
+
+/* Accas */
+.accaHeader{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.accaStats{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.accaBuilder{
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(255,255,255,.04);
+}
+.abRow{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+.abHint{ margin-top:8px; opacity:.85; font-size: 13px; }
+.accaPickList{
+  padding: 10px 6px 2px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.accaPick{
+  padding: 10px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(0,0,0,.18);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.apChk{ display:flex; gap:10px; align-items:center; font-weight:800; }
+.apChk input{ transform: scale(1.1); }
+.apMeta{ opacity:.85; font-size: 13px; }
+.accaLegs{
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,.12);
+}
+.accaLeg{ font-size: 13px; opacity: .92; }
+@media (min-width: 520px){
+  .accaHeader{ grid-template-columns: 1fr 1fr; }
+}
+
+.accaBrRow{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 8px 0 12px;
+}
+@media (min-width: 520px){
+  .accaBrRow{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Smaller Add button + locked state */
+.trackAdd{
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 10px;
+  margin-right: 6px;
+}
+.trackAdd.added{
+  opacity: .85;
+}
+.trackAdd:disabled{
+  opacity: .75;
+}
+
+/* League charts (neon on dark) */
+.trackerLeagueCharts{
+  padding: 12px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(0,0,0,.22);
+}
+.lcGrid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.lcCard{
+  padding: 10px 10px 6px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,.16);
+}
+.lcTitle{
+  font-weight: 800;
+  margin-bottom: 6px;
+  opacity: .95;
+}
+@media (min-width: 520px){
+  .lcGrid{ grid-template-columns: 1fr 1fr; }
+}
+.trackSectionTitle{ margin-top: 18px; }
+
+canvas{ image-rendering:auto; }
+
+
+/* Prevent sideways scroll */
+body{overflow-x:hidden;}
+
+/* ===== Tracker: mobile fit (prevents horizontal overflow) ===== */
+@media (max-width: 520px){
+  /* Prevent iOS/Android auto-zoom when focusing controls */
+  input, select, textarea, button{ font-size: 16px; }
+
+  body.trackerView{
+    overflow-x: hidden;
+  }
+  body.trackerView .container{
+    max-width: 100%;
+    padding-left: calc(10px + env(safe-area-inset-left));
+    padding-right: calc(10px + env(safe-area-inset-right));
+  }
+
+  /* Stack tracker sections so nothing forces width */
+  body.trackerView .trackerHeader{
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+  body.trackerView .trackerStats,
+  body.trackerView .trackerBankroll,
+  body.trackerView .trackerFilters,
+  body.trackerView .trackerChart,
+  body.trackerView .trackerLeagueCharts{
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Tracker stats table: make it wrap instead of widening the page */
+  body.trackerView .tsTable{
+    width: 100%;
+    table-layout: fixed;
+  }
+  body.trackerView .tsTable td{
+    padding: 6px 6px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  /* Charts: always fit screen */
+  body.trackerView canvas{
+    max-width: 100% !important;
+  }
+  body.trackerView .trackerChart canvas{
+    width: 100% !important;
+    height: 180px !important;
+  }
+
+  /* Slightly tighter chart cards */
+  body.trackerView .trackerChart,
+  body.trackerView .trackerLeagueCharts{
+    padding: 10px;
+  }
+
+  /* Hide any accidental horizontal scrollbar from card list */
+  body.trackerView .cardList,
+  body.trackerView .tableScroll{
+    overflow-x: hidden;
+  }
+}
+
+
+/* --- Tracker mobile tidy (tracker only) --- */
+@media (max-width: 640px){
+  body.trackerView .trackerStats{ padding: 14px; }
+  body.trackerView .tsSummary{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+  }
+  body.trackerView .tsMetric{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    line-height: 1.1;
+  }
+  body.trackerView .tsMetric span{ font-size: 11px; }
+  body.trackerView .tsMetric b{ font-size: 13px; }
+  body.trackerView .tsSubMetric{
+    margin-top: 2px;
+    font-size: 11px;
+    opacity: .9;
+  }
+  body.trackerView .tsSubMetric b{ font-size: 12px; }
+
+  /* Make the small table fit phones */
+  body.trackerView .tsTable{
+    margin-top: 10px;
+    table-layout: auto;
+  }
+  body.trackerView .tsTable td{
+    padding: 6px 6px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  body.trackerView .tsTable td:first-child{ opacity: .75; }
+}
+
+canvas{image-rendering:crisp-edges;image-rendering:pixelated;}
+/* === MOBILE CANVAS CLARITY FIX === */
+canvas {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  transform: none !important;
+}
+
+.trackerChart,
+.trackerChart canvas {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.trackerChart canvas {
+  height: 180px !important;
+}
+
+
+/* === MOBILE COMPACT LAYOUT FIX === */
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container,
+  .topbar {
+    max-width: 100%;
+    margin: 0 auto;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .controls,
+  .card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .trackerChart canvas {
+    height: 200px;
+  }
+}
+
+
+/* Pending Games Table */
+.table-wrap{overflow-x:auto}
+.games-table{width:100%;border-collapse:collapse;min-width:520px}
+.games-table th,.games-table td{padding:10px;text-align:left}
+.outcome{padding:6px;border-radius:8px;font-weight:700}
+.outcome.pending{background:#c9a227}
+.outcome.won{background:#1f8f4d;color:#fff}
+.outcome.lost{background:#8f1f1f;color:#fff}

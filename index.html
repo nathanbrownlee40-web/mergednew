@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- Mobile: stable scaling + notch safe areas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827" />
+  <title>TOP DAILY TIPS</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="compact">
+  <header class="topbar">
+    <div class="title">
+      <h1>TOP DAILY TIPS</h1>
+    </div>
+    <div class="actions">
+      <button id="installBtn" class="btn hidden">Install</button>
+      <button id="viewBtn" class="btn btn-ghost">Wide</button>
+      <button id="resetBtn" class="btn btn-ghost">Reset</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls card">
+      <div class="control span-2">
+        <label>Dashboard</label>
+        <div id="tabs" class="tabs"></div>
+      </div>
+
+      <div class="control">
+        <label>Search</label>
+        <input id="q" type="search" placeholder="Team, league, pick…" />
+      </div>
+
+      <div class="control">
+        <label>League</label>
+        <select id="league"></select>
+      </div>
+
+      <div class="control">
+        <label>Pick</label>
+        <select id="pick"></select>
+      </div>
+
+      <div class="control" id="pminWrap">
+        <label id="pminLabel">Min probability</label>
+        <input id="pmin" type="number" step="1" min="0" max="100" placeholder="e.g. 70" />
+      </div>
+
+      <div class="control">
+        <label>Date from</label>
+        <input id="dfrom" type="date" />
+      </div>
+
+      <div class="control">
+        <label>Date to</label>
+        <input id="dto" type="date" />
+      </div>
+    </section>
+
+    <section class="card tableWrap">
+      <div class="tableMeta">
+        <div>
+          <div id="count"></div>
+          <div id="status" class="small"></div>
+        </div>
+        <div class="small">Tap a card/row for details • click headers to sort</div>
+      </div>
+
+      <div id="cardList" class="cardList"></div>
+
+      <div class="tableScroll">
+        <table id="tbl">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="details" class="dialog">
+    <div class="dialogHeader">
+      <div>
+        <div id="d_title" class="dialogTitle"></div>
+        <div id="d_sub" class="dialogSub"></div>
+      </div>
+      <button id="closeDlg" class="btn btn-ghost">Close</button>
+    </div>
+    <div id="d_body" class="dialogBody"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+
+<!-- Pending Games Table -->
+<section class="card pending-games">
+  <h2>Pending Games</h2>
+  <div class="table-wrap">
+    <table class="games-table">
+      <thead>
+        <tr>
+          <th>Match</th>
+          <th>Market</th>
+          <th>Odds</th>
+          <th>Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PSV vs Excelsior</td>
+          <td>Over 2.5</td>
+          <td>2.00</td>
+          <td>
+            <select class="outcome">
+              <option value="pending">Pending</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</body>
+</html>
